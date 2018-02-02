@@ -24,28 +24,34 @@ $(function () {
 
 
     var the_game = setInterval(function () {
-        var pole_current_position = parseInt(pole.css('right'));
 
-        // check whether pole went out of the container
-        if (pole_current_position > container_width){
-            var new_height = parseInt(Math.random() * 100);
+        if(collision(bird, pole_1) || collision(bird, pole_2)){
+            stop_the_game();
+        } else {
 
-            // change the pole height
-            pole_1.css('height', pole_initial_height + new_height);
-            pole_2.css('height', pole_initial_height - new_height);
+            var pole_current_position = parseInt(pole.css('right'));
 
-            // increase speed
-            speed = speed + 1;
-            speed_span.text(speed);
+            // check whether pole went out of the container
+            if (pole_current_position > container_width) {
+                var new_height = parseInt(Math.random() * 100);
 
-            pole_current_position = pole_initial_position;
-        }
+                // change the pole height
+                pole_1.css('height', pole_initial_height + new_height);
+                pole_2.css('height', pole_initial_height - new_height);
 
-        // move the poles
-        pole.css('right', pole_current_position + speed);
+                // increase speed
+                speed = speed + 1;
+                speed_span.text(speed);
 
-        if(go_up === false){
-            go_down();
+                pole_current_position = pole_initial_position;
+            }
+
+            // move the poles
+            pole.css('right', pole_current_position + speed);
+
+            if (go_up === false) {
+                go_down();
+            }
         }
 
     }, 50);
@@ -72,4 +78,16 @@ $(function () {
     function up() {
         bird.css('top', parseInt(bird.css('top')) - 10);
     }
+    
+    function stop_the_game() {
+        clearInterval(the_game);
+        restart_btn.slideDown();
+    }
+    
+    function collision($div1, $div2) {
+        var x1 = $div1.offset().left;
+        var y1 = $div1.offset().top;
+        
+    }
+    
 });
